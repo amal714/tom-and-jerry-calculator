@@ -1,6 +1,10 @@
 # Tom & Jerry Super Colorful Fun Calculator 🧀✨
 
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen.svg)](https://amal714.github.io/tom-and-jerry-calculator/)
+
 An ultra-vivid, colorful web calculator designed to be delightful for kids, packed with juicy animations and Tom & Jerry cartoon elements!
+
+🎮 **Play Live:** [https://amal714.github.io/tom-and-jerry-calculator/](https://amal714.github.io/tom-and-jerry-calculator/)
 
 ## Highlights
 

@@ -127,6 +127,125 @@ body {
 .paw-3 { bottom: 6%; left: 25%; transform: rotate(-30deg); }
 .paw-4 { bottom: 3%; left: 36%; transform: rotate(-15deg); }
 
+/* Floating Bones for Spike & Tyke */
+.bone {
+  font-size: 2.8rem;
+  animation: floatBone 6s ease-in-out infinite alternate;
+}
+.bone-1 { top: 68%; left: 14%; animation-delay: 1s; transform: rotate(-35deg); }
+.bone-2 { top: 18%; right: 24%; animation-delay: 2.2s; transform: rotate(45deg); }
+
+@keyframes floatBone {
+  0% { transform: translateY(0px) rotate(-20deg) scale(0.95); }
+  50% { transform: translateY(-15px) rotate(25deg) scale(1.05); }
+  100% { transform: translateY(8px) rotate(-10deg) scale(1); }
+}
+
+/* ==========================================================================
+   SCENE CHARACTERS: SPIKE & TYKE, NIBBLES (TUFFY)
+   ========================================================================== */
+
+.scene-characters {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.scene-character {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.22));
+}
+
+.scene-char-img {
+  display: block;
+  object-fit: contain;
+}
+
+/* Nibbles (Tuffy) - Top Left */
+.nibbles-character {
+  top: 40px;
+  left: calc(50% - 370px);
+  animation: nibblesCheer 3.5s ease-in-out infinite alternate;
+}
+
+.nibbles-img {
+  width: 115px;
+  height: 115px;
+}
+
+@keyframes nibblesCheer {
+  0% { transform: translateY(0) rotate(-6deg) scale(1); }
+  50% { transform: translateY(-12px) rotate(4deg) scale(1.06); }
+  100% { transform: translateY(5px) rotate(-4deg) scale(0.98); }
+}
+
+.nibbles-character:hover {
+  transform: scale(1.2) rotate(8deg) translateY(-8px) !important;
+}
+
+/* Spike the Bulldog & Tyke - Bottom Right */
+.spike-character {
+  bottom: 25px;
+  right: calc(50% - 390px);
+  animation: spikeGuard 5s ease-in-out infinite alternate;
+}
+
+.spike-img {
+  width: 175px;
+  height: 145px;
+}
+
+@keyframes spikeGuard {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.03); }
+  100% { transform: translateY(4px) scale(0.98); }
+}
+
+.spike-character:hover {
+  transform: scale(1.15) translateY(-6px) !important;
+}
+
+/* Character Speech Bubbles */
+.character-speech {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: speechBob 2.5s ease-in-out infinite;
+}
+
+.nibbles-bubble {
+  color: #7209b7;
+  border: 2px solid #ffbe0b;
+}
+
+.spike-bubble {
+  top: -30px;
+  color: #e63946;
+  border: 2px solid #457b9d;
+}
+
+@keyframes speechBob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
 /* ==========================================================================
    CHASE STAGE: TOM CHASING JERRY ALL AROUND THE CALCULATOR
    ========================================================================== */
@@ -167,11 +286,12 @@ body {
   100% { transform: translateY(-6px) scale(1.02); }
 }
 
-/* Jerry the Mouse Runner */
+/* Jerry the Mouse Runner (Leading the chase in front!) */
 .jerry-runner {
   width: 75px;
   height: 75px;
   animation: chaseAround 8.5s linear infinite;
+  animation-delay: -0.75s; /* Jerry runs ahead in front with the cheese */
 }
 
 .jerry-img {
@@ -179,12 +299,12 @@ body {
   height: 75px;
 }
 
-/* Tom the Cat Runner (Following right on Jerry's tail!) */
+/* Tom the Cat Runner (Chasing right behind Jerry!) */
 .tom-runner {
   width: 100px;
   height: 100px;
   animation: chaseAround 8.5s linear infinite;
-  animation-delay: -0.65s; /* Chasing right behind Jerry! */
+  animation-delay: 0s; /* Tom is behind Jerry, in hot pursuit */
 }
 
 .tom-img {
@@ -634,9 +754,52 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+  .nibbles-character {
+    left: 20px;
+    top: 25px;
+    transform: scale(0.9);
+  }
+  .spike-character {
+    right: 20px;
+    bottom: 20px;
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 768px) {
+  .nibbles-character {
+    left: 12px;
+    top: 15px;
+    transform: scale(0.75) !important;
+  }
+  .spike-character {
+    right: 10px;
+    bottom: 12px;
+    transform: scale(0.75) !important;
+  }
+}
+
 @media (max-width: 480px) {
   body {
     padding: 3.2rem 1.6rem;
+  }
+
+  .nibbles-character {
+    left: 6px;
+    top: 10px;
+    transform: scale(0.6) !important;
+  }
+
+  .spike-character {
+    right: 6px;
+    bottom: 8px;
+    transform: scale(0.6) !important;
+  }
+
+  .character-speech {
+    font-size: 0.68rem;
+    padding: 3px 8px;
   }
 
   .calculator-chase-wrapper {

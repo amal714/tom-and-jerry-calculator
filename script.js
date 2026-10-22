@@ -395,18 +395,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (tom) {
-    tom.addEventListener('click', () => {
-      const bubble = tom.querySelector('.runner-bubble');
-      if (bubble) bubble.textContent = "Almost caught you! 🐾";
-      const img = tom.querySelector('.runner-img');
+  // Nibbles (Tuffy) Interactive Reaction
+  const nibbles = document.getElementById('nibbles-character');
+  const nibblesQuotes = [
+    "Go Jerry! Save the cheese! 🧀",
+    "Yum! More Swiss cheese! 🍼",
+    "Allez Jerry! You can do it! ✨",
+    "Squeak! Watch out for Tom! 🐭"
+  ];
+  let nibblesIdx = 0;
+
+  if (nibbles) {
+    nibbles.addEventListener('click', () => {
+      nibblesIdx = (nibblesIdx + 1) % nibblesQuotes.length;
+      const bubble = nibbles.querySelector('.character-speech');
+      if (bubble) bubble.textContent = nibblesQuotes[nibblesIdx];
+      const img = nibbles.querySelector('.scene-char-img');
+      if (img) {
+        img.animate([
+          { transform: 'translateY(0) scale(1)' },
+          { transform: 'translateY(-25px) scale(1.35) rotate(-15deg)' },
+          { transform: 'translateY(0) scale(1) rotate(0deg)' }
+        ], { duration: 500, easing: 'ease-out' });
+      }
+      if (navigator.vibrate) { try { navigator.vibrate([10, 30, 15]); } catch (_) {} }
+    });
+  }
+
+  // Spike & Tyke Interactive Reaction
+  const spike = document.getElementById('spike-character');
+  const spikeQuotes = [
+    "Don't wake my boy, Tom! 🐶🦴",
+    "Good boy, Tyke! *wag wag* 🐾",
+    "Listen here, cat! One step closer and... 💥",
+    "That's my puppy! Leave him be! 🦴"
+  ];
+  let spikeIdx = 0;
+
+  if (spike) {
+    spike.addEventListener('click', () => {
+      spikeIdx = (spikeIdx + 1) % spikeQuotes.length;
+      const bubble = spike.querySelector('.character-speech');
+      if (bubble) bubble.textContent = spikeQuotes[spikeIdx];
+      const img = spike.querySelector('.scene-char-img');
       if (img) {
         img.animate([
           { transform: 'scale(1)' },
-          { transform: 'scale(1.4) rotate(-15deg)' },
-          { transform: 'scale(1)' }
-        ], { duration: 400 });
+          { transform: 'scale(1.2) translateY(-15px) rotate(4deg)' },
+          { transform: 'scale(1) translateY(0) rotate(0deg)' }
+        ], { duration: 550, easing: 'ease-out' });
       }
+      if (navigator.vibrate) { try { navigator.vibrate([20, 40, 20]); } catch (_) {} }
     });
   }
 

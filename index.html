@@ -3,33 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tom & Jerry Super Colorful Fun Calculator</title>
+  <title>Tom & Jerry Cartoon Friends Colorful Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Titan+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Animated Background Elements: Floating Cheese, Stars & Paws -->
+  <!-- Animated Background Elements: Floating Cheese, Bones, Stars & Paws -->
   <div class="cartoon-background" aria-hidden="true">
     <div class="floating-item cheese cheese-1">🧀</div>
     <div class="floating-item cheese cheese-2">🧀</div>
     <div class="floating-item cheese cheese-3">🧀</div>
-    <div class="floating-item cheese cheese-4">🧀</div>
+    <div class="floating-item bone bone-1">🦴</div>
+    <div class="floating-item bone bone-2">🦴</div>
 
     <div class="floating-item star star-1">⭐</div>
     <div class="floating-item star star-2">✨</div>
     <div class="floating-item star star-3">🌟</div>
-    <div class="floating-item star star-4">🍭</div>
-    <div class="floating-item star star-5">🎈</div>
+    <div class="floating-item star star-4">🎈</div>
 
     <div class="paw paw-1">🐾</div>
     <div class="paw paw-2">🐾</div>
     <div class="paw paw-3">🐾</div>
-    <div class="paw paw-4">🐾</div>
   </div>
 
-  <!-- Calculator Chase Stage (Tom chasing Jerry all around the calculator) -->
+  <!-- Interactive Character Scene: Spike, Tyke & Nibbles cheering/watching -->
+  <aside class="scene-characters" aria-label="Cartoon Characters">
+    <!-- Nibbles (Tuffy) Baby Mouse -->
+    <div class="scene-character nibbles-character" id="nibbles-character" title="Nibbles (Tuffy) the Baby Mouse! Click me!">
+      <div class="character-speech nibbles-bubble">Go Jerry! Save the cheese! 🧀</div>
+      <img src="nibbles_tuffy.png" alt="Nibbles Tuffy Baby Mouse" class="scene-char-img nibbles-img">
+    </div>
+
+    <!-- Spike the Bulldog & Tyke the Puppy -->
+    <div class="scene-character spike-character" id="spike-character" title="Spike & Tyke! Click us!">
+      <div class="character-speech spike-bubble">Don't wake my boy, Tom! 🐶🦴</div>
+      <img src="spike_and_tyke.png" alt="Spike the Bulldog and Tyke the Puppy" class="scene-char-img spike-img">
+    </div>
+  </aside>
+
+  <!-- Calculator Chase Stage (Tom chasing Jerry around the card) -->
   <div class="calculator-chase-wrapper">
     <!-- Jerry Leading the Chase with Swiss Cheese -->
     <div class="runner jerry-runner" id="jerry-runner" title="Jerry running with cheese! Click me!">
@@ -49,7 +63,7 @@
       <header class="calculator-header">
         <div class="logo-group">
           <span class="cheese-badge">🧀</span>
-          <h1 class="app-title">TOM &amp; JERRY <span class="calc-word">CHASE!</span></h1>
+          <h1 class="app-title">TOM &amp; JERRY <span class="calc-word">PARTY!</span></h1>
         </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme" title="Switch Fun Party Themes">
           <span class="theme-emoji">🎨</span>

@@ -1,0 +1,697 @@
+/* ==========================================================================
+   SUPER COLORFUL TOM & JERRY KIDS CALCULATOR
+   ========================================================================== */
+
+:root {
+  /* Candy Wonderland Rainbow Palette */
+  --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #a1c4fd 50%, #c2e9fb 75%, #ffecd2 100%);
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --card-border: #ffbe0b;
+  --card-shadow: 0 20px 50px rgba(255, 110, 150, 0.35), 0 0 0 8px #ffd166, 0 0 0 14px rgba(255, 255, 255, 0.8);
+
+  --display-bg: #fffdf0;
+  --display-border: #ffb703;
+  --display-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.06), 0 3px 0 #ffe082;
+  --text-main: #2b2d42;
+  --text-expr: #f72585;
+
+  --ripple-color: rgba(255, 255, 255, 0.8);
+}
+
+body.party-mode {
+  --bg-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 25%, #30cfd0 50%, #330867 75%, #a8edea 100%);
+  --card-bg: rgba(255, 255, 255, 0.96);
+  --card-border: #ff007f;
+  --card-shadow: 0 25px 60px rgba(255, 0, 128, 0.45), 0 0 0 8px #70e000, 0 0 0 14px #ffbe0b;
+  --display-bg: #f0fdf4;
+  --display-border: #06d6a0;
+  --text-expr: #7209b7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Fredoka', 'Comic Neue', cursive, sans-serif;
+  background: var(--bg-gradient);
+  background-size: 300% 300%;
+  animation: rainbowShift 12s ease infinite alternate;
+  padding: 3.5rem 1.5rem;
+  position: relative;
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   CARTOON BACKGROUND: FLOATING CHEESE, STARS & PAWS
+   ========================================================================== */
+
+.cartoon-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.floating-item {
+  position: absolute;
+  user-select: none;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
+}
+
+.cheese {
+  font-size: 3.2rem;
+  animation: floatCheese 7s ease-in-out infinite alternate;
+}
+
+.cheese-1 { top: 8%; left: 6%; animation-delay: 0s; transform: rotate(-15deg); }
+.cheese-2 { top: 78%; left: 8%; animation-delay: 1.5s; font-size: 3.8rem; transform: rotate(20deg); }
+.cheese-3 { top: 12%; right: 7%; animation-delay: 2.8s; font-size: 3.5rem; transform: rotate(10deg); }
+.cheese-4 { bottom: 10%; right: 9%; animation-delay: 0.8s; font-size: 4rem; transform: rotate(-25deg); }
+
+@keyframes floatCheese {
+  0% { transform: translateY(0px) rotate(-10deg) scale(1); }
+  50% { transform: translateY(-25px) rotate(15deg) scale(1.08); }
+  100% { transform: translateY(10px) rotate(-15deg) scale(0.96); }
+}
+
+.star {
+  font-size: 2.4rem;
+  animation: twinkleBounce 5s ease-in-out infinite;
+}
+
+.star-1 { top: 22%; left: 16%; animation-delay: 0.3s; }
+.star-2 { top: 48%; left: 4%; animation-delay: 1.2s; font-size: 2.8rem; }
+.star-3 { top: 35%; right: 15%; animation-delay: 2s; }
+.star-4 { bottom: 25%; right: 6%; animation-delay: 0.7s; font-size: 3rem; }
+.star-5 { top: 60%; right: 18%; animation-delay: 1.8s; font-size: 3.2rem; }
+
+@keyframes twinkleBounce {
+  0%, 100% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.85; }
+  50% { transform: translateY(-18px) scale(1.15) rotate(180deg); opacity: 1; }
+}
+
+.paw {
+  position: absolute;
+  font-size: 2.2rem;
+  opacity: 0.35;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.paw-1 { top: 4%; left: 32%; transform: rotate(25deg); }
+.paw-2 { top: 10%; left: 42%; transform: rotate(40deg); }
+.paw-3 { bottom: 6%; left: 25%; transform: rotate(-30deg); }
+.paw-4 { bottom: 3%; left: 36%; transform: rotate(-15deg); }
+
+/* ==========================================================================
+   CHASE STAGE: TOM CHASING JERRY ALL AROUND THE CALCULATOR
+   ========================================================================== */
+
+.calculator-chase-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 410px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  margin: 2rem 0;
+}
+
+/* Base Running Character Container */
+.runner {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 25;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.28));
+  transition: filter 0.2s ease;
+}
+
+.runner:hover {
+  filter: drop-shadow(0 12px 22px rgba(255, 0, 127, 0.45));
+}
+
+.runner-img {
+  display: block;
+  object-fit: contain;
+  animation: sprintBounce 0.22s ease-in-out infinite alternate;
+}
+
+@keyframes sprintBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-6px) scale(1.02); }
+}
+
+/* Jerry the Mouse Runner */
+.jerry-runner {
+  width: 75px;
+  height: 75px;
+  animation: chaseAround 8.5s linear infinite;
+}
+
+.jerry-img {
+  width: 75px;
+  height: 75px;
+}
+
+/* Tom the Cat Runner (Following right on Jerry's tail!) */
+.tom-runner {
+  width: 100px;
+  height: 100px;
+  animation: chaseAround 8.5s linear infinite;
+  animation-delay: -0.65s; /* Chasing right behind Jerry! */
+}
+
+.tom-img {
+  width: 100px;
+  height: 100px;
+}
+
+/* Speech bubbles above characters */
+.runner-bubble {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+  white-space: nowrap;
+  pointer-events: none;
+  border: 2px solid #ffbe0b;
+}
+
+.jerry-bubble {
+  color: #ff006e;
+}
+
+.tom-bubble {
+  color: #3a86ff;
+  border-color: #3a86ff;
+}
+
+/* Continuous 360-degree perimeter chase loop around calculator card */
+@keyframes chaseAround {
+  /* ================= Top Side (Running Left to Right) ================= */
+  0% {
+    top: -65px;
+    left: -20px;
+    transform: scaleX(1) rotate(0deg);
+  }
+  22% {
+    top: -65px;
+    left: calc(100% - 65px);
+    transform: scaleX(1) rotate(0deg);
+  }
+  /* Top-Right Corner Turn */
+  25% {
+    top: -15px;
+    left: calc(100% + 15px);
+    transform: scaleX(1) rotate(90deg);
+  }
+
+  /* ================= Right Side (Running Top to Bottom) ================= */
+  47% {
+    top: calc(100% - 75px);
+    left: calc(100% + 15px);
+    transform: scaleX(1) rotate(90deg);
+  }
+  /* Bottom-Right Corner Turn */
+  50% {
+    top: calc(100% + 20px);
+    left: calc(100% - 65px);
+    transform: scaleX(-1) rotate(0deg);
+  }
+
+  /* ================= Bottom Side (Running Right to Left) ================= */
+  72% {
+    top: calc(100% + 20px);
+    left: -20px;
+    transform: scaleX(-1) rotate(0deg);
+  }
+  /* Bottom-Left Corner Turn */
+  75% {
+    top: calc(100% - 75px);
+    left: -70px;
+    transform: scaleX(1) rotate(-90deg);
+  }
+
+  /* ================= Left Side (Running Bottom to Top) ================= */
+  97% {
+    top: -15px;
+    left: -70px;
+    transform: scaleX(1) rotate(-90deg);
+  }
+  /* Top-Left Corner Turn */
+  100% {
+    top: -65px;
+    left: -20px;
+    transform: scaleX(1) rotate(0deg);
+  }
+}
+
+/* ==========================================================================
+   CALCULATOR CARD (SUPER CANDY CHUNKY)
+   ========================================================================== */
+
+.calculator-card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 4px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 38px;
+  padding: 1.8rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 10;
+  animation: cardBounceIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardBounceIn {
+  0% { opacity: 0; transform: scale(0.8) translateY(40px); }
+  70% { transform: scale(1.04) translateY(-10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Header */
+.calculator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.2rem;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cheese-badge {
+  font-size: 1.8rem;
+  animation: wiggle 2s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg) scale(1.1); }
+  75% { transform: rotate(15deg) scale(1.1); }
+}
+
+.app-title {
+  font-family: 'Titan One', cursive, sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  background: linear-gradient(45deg, #ff007f, #ff7900, #ffb703, #3a86ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(1px 2px 0px rgba(0, 0, 0, 0.1));
+}
+
+.calc-word {
+  color: #70e000;
+  -webkit-text-fill-color: #70e000;
+}
+
+.theme-toggle {
+  background: linear-gradient(135deg, #ff007f, #ffbe0b, #00f5d4);
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 12px rgba(255, 0, 127, 0.35);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+}
+
+.theme-toggle:hover {
+  transform: rotate(35deg) scale(1.15);
+}
+
+.theme-toggle:active {
+  transform: scale(0.9);
+}
+
+.theme-emoji {
+  font-size: 1.4rem;
+}
+
+/* ==========================================================================
+   DISPLAY CONTAINER
+   ========================================================================== */
+
+.display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 118px;
+  padding: 0.85rem 1.1rem;
+  background: var(--display-bg);
+  border: 3px dashed var(--display-border);
+  box-shadow: var(--display-shadow);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.expression-display {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-expr);
+  min-height: 1.6rem;
+  letter-spacing: 0.05em;
+  word-break: break-all;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+.primary-display {
+  font-family: 'Titan One', 'Fredoka', cursive;
+  font-size: 3.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  transition: transform 0.15s ease, color 0.2s ease;
+}
+
+.primary-display::-webkit-scrollbar {
+  display: none;
+}
+
+.primary-display.pop {
+  animation: popJelly 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popJelly {
+  0% { transform: scale(0.85); color: #ff007f; }
+  50% { transform: scale(1.12); color: #70e000; }
+  100% { transform: scale(1); color: var(--text-main); }
+}
+
+.shake {
+  animation: shakeAnimation 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shakeAnimation {
+  10%, 90% { transform: translate3d(-4px, 0, 0); }
+  20%, 80% { transform: translate3d(6px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* ==========================================================================
+   KEYPAD & VIBRANT 3D CANDY BUTTONS
+   ========================================================================== */
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+}
+
+.btn {
+  position: relative;
+  height: 62px;
+  border-radius: 22px;
+  border: none;
+  font-family: 'Titan One', 'Fredoka', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.12s ease,
+              filter 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.btn:active,
+.btn.pressed {
+  transform: translateY(4px) scale(0.94) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Candy Button Palettes */
+.btn-candy-pink {
+  background: linear-gradient(180deg, #ff758c 0%, #ff416c 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #c9184a, 0 8px 12px rgba(255, 65, 108, 0.35);
+}
+
+.btn-candy-coral {
+  background: linear-gradient(180deg, #ff8787 0%, #fa5252 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #c92a2a, 0 8px 12px rgba(250, 82, 82, 0.35);
+}
+
+.btn-candy-peach {
+  background: linear-gradient(180deg, #ffa07a 0%, #ff6f61 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #d9483b, 0 8px 12px rgba(255, 111, 97, 0.35);
+}
+
+.btn-candy-orange {
+  background: linear-gradient(180deg, #ff9f1c 0%, #f77f00 100%);
+  color: #ffffff;
+  font-size: 1.7rem;
+  box-shadow: 0 5px 0 #d66400, 0 8px 12px rgba(247, 127, 0, 0.4);
+}
+
+.btn-candy-lemon {
+  background: linear-gradient(180deg, #fff066 0%, #ffd60a 100%);
+  color: #5c4d00;
+  box-shadow: 0 5px 0 #cca100, 0 8px 12px rgba(255, 214, 10, 0.4);
+}
+
+.btn-candy-lime {
+  background: linear-gradient(180deg, #9ef01a 0%, #70e000 100%);
+  color: #1b4d00;
+  box-shadow: 0 5px 0 #4da600, 0 8px 12px rgba(112, 224, 0, 0.4);
+}
+
+.btn-candy-mint {
+  background: linear-gradient(180deg, #57cc99 0%, #06d6a0 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #049f75, 0 8px 12px rgba(6, 214, 160, 0.35);
+}
+
+.btn-candy-yellow {
+  background: linear-gradient(180deg, #ffc300 0%, #ffaa00 100%);
+  color: #ffffff;
+  font-size: 1.7rem;
+  box-shadow: 0 5px 0 #cc8800, 0 8px 12px rgba(255, 170, 0, 0.4);
+}
+
+.btn-candy-teal {
+  background: linear-gradient(180deg, #48cae4 0%, #00b4d8 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #0087a3, 0 8px 12px rgba(0, 180, 216, 0.35);
+}
+
+.btn-candy-cyan {
+  background: linear-gradient(180deg, #70e2ff 0%, #00c9ff 100%);
+  color: #004561;
+  box-shadow: 0 5px 0 #0096c7, 0 8px 12px rgba(0, 201, 255, 0.35);
+}
+
+.btn-candy-sky {
+  background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #225ecc, 0 8px 12px rgba(59, 130, 246, 0.35);
+}
+
+.btn-candy-amber {
+  background: linear-gradient(180deg, #fb8500 0%, #e85d04 100%);
+  color: #ffffff;
+  font-size: 1.8rem;
+  box-shadow: 0 5px 0 #b34200, 0 8px 12px rgba(232, 93, 4, 0.4);
+}
+
+.btn-candy-blue {
+  background: linear-gradient(180deg, #4ea8de 0%, #4361ee 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #2844ca, 0 8px 12px rgba(67, 97, 238, 0.4);
+}
+
+.btn-candy-indigo {
+  background: linear-gradient(180deg, #85586f 0%, #7209b7 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #520088, 0 8px 12px rgba(114, 9, 183, 0.35);
+}
+
+.btn-candy-purple {
+  background: linear-gradient(180deg, #a06cd5 0%, #8338ec 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #6018c4, 0 8px 12px rgba(131, 56, 236, 0.4);
+}
+
+.btn-candy-tangerine {
+  background: linear-gradient(180deg, #ff7b00 0%, #ff5400 100%);
+  color: #ffffff;
+  font-size: 1.7rem;
+  box-shadow: 0 5px 0 #cc3f00, 0 8px 12px rgba(255, 84, 0, 0.4);
+}
+
+.btn-candy-magenta {
+  background: linear-gradient(180deg, #f72585 0%, #b5179e 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #890b76, 0 8px 12px rgba(181, 23, 158, 0.4);
+}
+
+.btn-candy-rose {
+  background: linear-gradient(180deg, #ff4d6d 0%, #c9184a 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #8f0e32, 0 8px 12px rgba(201, 24, 74, 0.4);
+}
+
+.btn-candy-violet {
+  background: linear-gradient(180deg, #c77dff 0%, #9d4edd 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 0 #7326b5, 0 8px 12px rgba(157, 78, 221, 0.4);
+}
+
+/* Rainbow Animated Equals Button */
+.btn-candy-rainbow {
+  background: linear-gradient(45deg, #ff007f, #ff7900, #ffb703, #70e000, #00f5d4, #3a86ff, #8338ec, #ff007f);
+  background-size: 400% 400%;
+  animation: rainbowButton 4s ease infinite;
+  color: #ffffff;
+  font-size: 1.9rem;
+  box-shadow: 0 5px 0 #5f0979, 0 10px 20px rgba(255, 0, 127, 0.45);
+}
+
+@keyframes rainbowButton {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  transform: scale(0);
+  animation: rippleAnimation 0.45s ease-out;
+  pointer-events: none;
+}
+
+@keyframes rippleAnimation {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  body {
+    padding: 3.2rem 1.6rem;
+  }
+
+  .calculator-chase-wrapper {
+    max-width: 330px;
+    margin: 1.5rem 0;
+  }
+
+  .calculator-card {
+    padding: 1.2rem 0.9rem;
+    gap: 0.8rem;
+    border-radius: 28px;
+    border-width: 3px;
+  }
+
+  .btn {
+    height: 52px;
+    font-size: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .primary-display {
+    font-size: 2.3rem;
+  }
+
+  .jerry-runner, .jerry-img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .tom-runner, .tom-img {
+    width: 72px;
+    height: 72px;
+  }
+
+  .runner-bubble {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding: 3rem 0.8rem;
+  }
+
+  .calculator-chase-wrapper {
+    max-width: 295px;
+  }
+
+  .btn {
+    height: 48px;
+    font-size: 1.15rem;
+    border-radius: 14px;
+  }
+
+  .keypad {
+    gap: 0.55rem;
+  }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tom & Jerry Super Colorful Fun Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Titan+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Animated Background Elements: Floating Cheese, Stars & Paws -->
+  <div class="cartoon-background" aria-hidden="true">
+    <div class="floating-item cheese cheese-1">🧀</div>
+    <div class="floating-item cheese cheese-2">🧀</div>
+    <div class="floating-item cheese cheese-3">🧀</div>
+    <div class="floating-item cheese cheese-4">🧀</div>
+
+    <div class="floating-item star star-1">⭐</div>
+    <div class="floating-item star star-2">✨</div>
+    <div class="floating-item star star-3">🌟</div>
+    <div class="floating-item star star-4">🍭</div>
+    <div class="floating-item star star-5">🎈</div>
+
+    <div class="paw paw-1">🐾</div>
+    <div class="paw paw-2">🐾</div>
+    <div class="paw paw-3">🐾</div>
+    <div class="paw paw-4">🐾</div>
+  </div>
+
+  <!-- Calculator Chase Stage (Tom chasing Jerry all around the calculator) -->
+  <div class="calculator-chase-wrapper">
+    <!-- Jerry Leading the Chase with Swiss Cheese -->
+    <div class="runner jerry-runner" id="jerry-runner" title="Jerry running with cheese! Click me!">
+      <img src="jerry_running.png" alt="Original Classic Jerry Running with Cheese" class="runner-img jerry-img">
+      <div class="runner-bubble jerry-bubble">Catch me if you can! 🧀</div>
+    </div>
+
+    <!-- Tom Frantically Chasing Right Behind -->
+    <div class="runner tom-runner" id="tom-runner" title="Classic Tom frantically chasing Jerry! Click me!">
+      <img src="tom_running.png" alt="Original Classic Tom Cat Chasing Jerry" class="runner-img tom-img">
+      <div class="runner-bubble tom-bubble">Give me that cheese! 🐾</div>
+    </div>
+
+    <!-- Calculator Card -->
+    <main class="calculator-card" role="region" aria-label="Colorful Kids Calculator">
+      <!-- Playful Header -->
+      <header class="calculator-header">
+        <div class="logo-group">
+          <span class="cheese-badge">🧀</span>
+          <h1 class="app-title">TOM &amp; JERRY <span class="calc-word">CHASE!</span></h1>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme" title="Switch Fun Party Themes">
+          <span class="theme-emoji">🎨</span>
+        </button>
+      </header>
+
+      <!-- Chunky Screen -->
+      <section class="display-container" aria-live="polite">
+        <div class="expression-display" id="expression-display"></div>
+        <div class="primary-display" id="primary-display">0</div>
+      </section>
+
+      <!-- Rainbow Keypad -->
+      <div class="keypad">
+        <!-- Row 1 -->
+        <button class="btn btn-candy-pink" data-action="clear" aria-label="All Clear">AC</button>
+        <button class="btn btn-candy-coral" data-action="delete" aria-label="Delete">⌫</button>
+        <button class="btn btn-candy-peach" data-action="percent" aria-label="Percent">%</button>
+        <button class="btn btn-candy-orange" data-operator="÷" aria-label="Divide">÷</button>
+
+        <!-- Row 2 -->
+        <button class="btn btn-candy-lemon" data-number="7">7</button>
+        <button class="btn btn-candy-lime" data-number="8">8</button>
+        <button class="btn btn-candy-mint" data-number="9">9</button>
+        <button class="btn btn-candy-yellow" data-operator="×" aria-label="Multiply">×</button>
+
+        <!-- Row 3 -->
+        <button class="btn btn-candy-teal" data-number="4">4</button>
+        <button class="btn btn-candy-cyan" data-number="5">5</button>
+        <button class="btn btn-candy-sky" data-number="6">6</button>
+        <button class="btn btn-candy-amber" data-operator="-" aria-label="Subtract">−</button>
+
+        <!-- Row 4 -->
+        <button class="btn btn-candy-blue" data-number="1">1</button>
+        <button class="btn btn-candy-indigo" data-number="2">2</button>
+        <button class="btn btn-candy-purple" data-number="3">3</button>
+        <button class="btn btn-candy-tangerine" data-operator="+" aria-label="Add">+</button>
+
+        <!-- Row 5 -->
+        <button class="btn btn-candy-magenta" data-action="negate" aria-label="Plus or Minus">±</button>
+        <button class="btn btn-candy-rose" data-number="0">0</button>
+        <button class="btn btn-candy-violet" data-number="." aria-label="Decimal">.</button>
+        <button class="btn btn-candy-rainbow" data-action="equals" aria-label="Equals">=</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
